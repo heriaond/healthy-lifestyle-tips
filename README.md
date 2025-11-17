@@ -83,6 +83,12 @@ Seed the database with sample tips:
 yarn db:seed
 ```
 
+Previewe the database
+
+```bash
+yarn db:studio
+```
+
 ### 4. Run the Development Server
 
 ```bash
