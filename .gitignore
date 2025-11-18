@@ -28,6 +28,16 @@ yarn-error.log*
 .env*.local
 .env
 
+# database
+*.db
+*.db-journal
+
+# IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
 # vercel
 .vercel
 
