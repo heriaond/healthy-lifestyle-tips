@@ -9,3 +9,6 @@ export {
 
 // Re-export all tip-related types
 export { type Tip } from "./tip";
+
+// Re-export all admin-related types
+export { type AdminStats, type AdminUser, type RecentTip } from "./admin";

@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Heart, Home, Menu, Mail, Plus, LogOut, Lightbulb } from "lucide-react";
+import { Heart, Home, Menu, Mail, Plus, LogOut, Lightbulb, Shield } from "lucide-react";
 import { FaGoogle, FaDiscord } from "react-icons/fa";
 import { EmailOTPDialog } from "@/components/email-otp-dialog";
 import { AddTipDialog } from "@/components/add-tip-dialog";
@@ -82,6 +82,14 @@ export function Navigation() {
                       Add Tip
                     </Button>
                   </AddTipDialog>
+                  {session.user?.role === "admin" && (
+                    <Link href="/admin">
+                      <Button variant="ghost" size="sm">
+                        <Shield className="mr-2 h-4 w-4" />
+                        Admin
+                      </Button>
+                    </Link>
+                  )}
                 </>
               )}
             </div>
@@ -145,6 +153,17 @@ export function Navigation() {
                       Add Tip
                     </DropdownMenuItem>
                   </AddTipDialog>
+                  {session.user?.role === "admin" && (
+                    <>
+                      <DropdownMenuSeparator className="md:hidden" />
+                      <DropdownMenuItem asChild className="md:hidden">
+                        <Link href="/admin">
+                          <Shield className="mr-2 h-4 w-4" />
+                          Admin
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => signOut()}>
                     <LogOut className="mr-2 h-4 w-4" />
