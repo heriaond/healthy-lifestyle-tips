@@ -1,41 +1,21 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { TipCard } from "@/components/tip-card";
-import { Moon, Apple, Dumbbell, Brain } from "lucide-react";
-
-const categoryIcons = {
-  SLEEP: Moon,
-  NUTRITION: Apple,
-  MOVEMENT: Dumbbell,
-  STRESS: Brain,
-};
-
-const categoryDescriptions = {
-  SLEEP: "Tips for better sleep and healthy sleep habits",
-  NUTRITION: "Nutrition advice and healthy eating practices",
-  MOVEMENT: "Exercise tips and physical activity recommendations",
-  STRESS: "Stress management and relaxation techniques",
-};
-
-type CategoryType = "SLEEP" | "NUTRITION" | "MOVEMENT" | "STRESS";
+import { Category, categoryArray, categoryIcons, categoryDescriptions } from "@/types";
 
 export async function generateStaticParams() {
-  return [
-    { category: "SLEEP" },
-    { category: "NUTRITION" },
-    { category: "MOVEMENT" },
-    { category: "STRESS" },
-  ];
+  return categoryArray.map((category) => ({ category }));
 }
 
 export default async function CategoryPage({
   params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }) {
-  const category = params.category.toUpperCase() as CategoryType;
+  const { category: categoryParam } = await params;
+  const category = categoryParam.toUpperCase() as Category;
 
-  if (!["SLEEP", "NUTRITION", "MOVEMENT", "STRESS"].includes(category)) {
+  if (!categoryArray.includes(category as Category)) {
     notFound();
   }
 

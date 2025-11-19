@@ -2,31 +2,13 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Moon, Apple, Dumbbell, Brain } from "lucide-react";
-
-type CategoryType = "SLEEP" | "NUTRITION" | "MOVEMENT" | "STRESS";
-
-const categoryIcons: Record<CategoryType, typeof Moon> = {
-  SLEEP: Moon,
-  NUTRITION: Apple,
-  MOVEMENT: Dumbbell,
-  STRESS: Brain,
-};
-
-const categoryDescriptions: Record<CategoryType, string> = {
-  SLEEP: "Improve your sleep quality and establish healthy sleep habits",
-  NUTRITION: "Learn about balanced diet and healthy eating practices",
-  MOVEMENT: "Discover exercises and physical activities for your wellbeing",
-  STRESS: "Find effective ways to manage and reduce stress",
-};
+import { Category, categoryArray, categoryIcons, categoryDescriptions } from "@/types";
 
 export default async function Home() {
   const tipCounts = await prisma.tip.groupBy({
     by: ["category"],
     _count: true,
   });
-
-  const categories = ["SLEEP", "NUTRITION", "MOVEMENT", "STRESS"] as const;
 
   const recentTips = await prisma.tip.findMany({
     take: 3,
@@ -48,7 +30,7 @@ export default async function Home() {
       <section>
         <h2 className="text-2xl font-semibold mb-4">Browse by Category</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {categories.map((category) => {
+          {categoryArray.map((category) => {
             const Icon = categoryIcons[category];
             const count = tipCounts.find((c) => c.category === category)?._count || 0;
             
@@ -82,7 +64,7 @@ export default async function Home() {
         <h2 className="text-2xl font-semibold mb-4">Recent Tips</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {recentTips.map((tip) => {
-            const Icon = categoryIcons[tip.category as CategoryType];
+            const Icon = categoryIcons[tip.category as Category];
             return (
               <Card key={tip.id}>
                 <CardHeader>

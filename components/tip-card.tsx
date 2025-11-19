@@ -6,14 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
-
-type Tip = {
-  id: string;
-  category: string;
-  title: string;
-  description: string;
-  createdAt: Date;
-};
+import { Tip } from "@/types";
 
 export function TipCard({ tip, initialFavorited = false }: { tip: Tip; initialFavorited?: boolean }) {
   const { data: session } = useSession();
