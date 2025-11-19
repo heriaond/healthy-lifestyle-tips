@@ -86,7 +86,7 @@ export function Navigation() {
                     <Link href="/admin">
                       <Button variant="ghost" size="sm">
                         <Shield className="mr-2 h-4 w-4" />
-                        Admin { session.user.name }
+                        Admin
                       </Button>
                     </Link>
                   )}

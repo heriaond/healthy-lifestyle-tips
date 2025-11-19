@@ -24,7 +24,6 @@ import {
 import {
   type AdminStats,
   type AdminUser,
-  type RecentTip,
   categoryIcons,
   categoryArray,
 } from "@/types";
@@ -34,7 +33,6 @@ export default function AdminPage() {
   const router = useRouter();
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [users, setUsers] = useState<AdminUser[]>([]);
-  const [recentTips, setRecentTips] = useState<RecentTip[]>([]);
   const [loading, setLoading] = useState(true);
   const [userToDelete, setUserToDelete] = useState<AdminUser | null>(null);
   const [updatingRole, setUpdatingRole] = useState<string | null>(null);
@@ -66,7 +64,6 @@ export default function AdminPage() {
       if (statsRes.ok) {
         const statsData = await statsRes.json();
         setStats(statsData.stats);
-        setRecentTips(statsData.recentTips);
       }
 
       if (usersRes.ok) {
@@ -322,45 +319,6 @@ export default function AdminPage() {
                 ))}
               </tbody>
             </table>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Recent Tips */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Tips</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {recentTips.map((tip) => {
-              const Icon = categoryIcons[tip.category as keyof typeof categoryIcons];
-              return (
-                <div
-                  key={tip.id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
-                >
-                  <div className="flex items-center gap-3">
-                    {Icon && <Icon className="h-4 w-4" />}
-                    <div>
-                      <p className="font-medium">{tip.title}</p>
-                      <p className="text-sm text-muted-foreground">
-                        by {tip.createdBy?.email || "Unknown"} •{" "}
-                        {new Date(tip.createdAt).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-                  <span className="text-xs px-2 py-1 rounded bg-muted capitalize">
-                    {tip.category.toLowerCase()}
-                  </span>
-                </div>
-              );
-            })}
-            {recentTips.length === 0 && (
-              <p className="text-muted-foreground text-center py-4">
-                No tips yet
-              </p>
-            )}
           </div>
         </CardContent>
       </Card>
