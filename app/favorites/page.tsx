@@ -40,7 +40,7 @@ export default async function FavoritesPage() {
         <div className="text-center py-12">
           <Heart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <p className="text-lg text-muted-foreground">
-            You haven't favorited any tips yet.
+            You haven&apos;t favorited any tips yet.
           </p>
           <p className="text-sm text-muted-foreground mt-2">
             Browse tips and click the heart icon to save your favorites!

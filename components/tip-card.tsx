@@ -127,7 +127,7 @@ export function TipCard({ tip, initialFavorited = false }: { tip: Tip; initialFa
           <DialogHeader>
             <DialogTitle>Delete Tip</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete "{tip.title}"? This action cannot be undone.
+              Are you sure you want to delete &quot;{tip.title}&quot;? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <div className="flex gap-2 justify-end">

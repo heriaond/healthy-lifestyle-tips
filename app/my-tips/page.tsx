@@ -32,7 +32,7 @@ export default async function MyTipsPage() {
         <div>
           <h1 className="text-3xl font-bold">My Tips</h1>
           <p className="text-muted-foreground">
-            Tips you've created and shared with the community
+            Tips you&apos;ve created and shared with the community
           </p>
         </div>
       </div>
@@ -51,10 +51,10 @@ export default async function MyTipsPage() {
         <div className="text-center py-12">
           <Lightbulb className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <p className="text-lg text-muted-foreground">
-            You haven't created any tips yet.
+            You haven&apos;t created any tips yet.
           </p>
           <p className="text-sm text-muted-foreground mt-2">
-            Click "Add Tip" in the navigation to share your first tip!
+            Click &quot;Add Tip&quot; in the navigation to share your first tip!
           </p>
         </div>
       )}

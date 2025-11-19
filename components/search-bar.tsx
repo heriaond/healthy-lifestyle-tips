@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -68,7 +68,7 @@ export function SearchBar() {
   };
 
   // Fetch results
-  const fetchResults = async (pageNum: number, append: boolean = false) => {
+  const fetchResults = useCallback(async (pageNum: number, append: boolean = false) => {
     if (!query.trim() && !hasActiveFilters) {
       setResults([]);
       setHasSearched(false);
@@ -83,7 +83,18 @@ export function SearchBar() {
     setHasSearched(true);
 
     try {
-      const response = await fetch(`/api/tips?${buildQueryString(pageNum)}`);
+      const params = new URLSearchParams();
+      if (query.trim()) params.set("search", query.trim());
+      if (filters.categories.length > 0) {
+        params.set("categories", filters.categories.join(","));
+      }
+      if (filters.searchIn !== "both") params.set("searchIn", filters.searchIn);
+      if (filters.showFavorites) params.set("favorites", "true");
+      if (filters.showMyTips) params.set("myTips", "true");
+      params.set("page", pageNum.toString());
+      params.set("limit", "9");
+
+      const response = await fetch(`/api/tips?${params.toString()}`);
       const data = await response.json();
 
       if (response.ok) {
@@ -106,7 +117,7 @@ export function SearchBar() {
       setLoading(false);
       setLoadingMore(false);
     }
-  };
+  }, [query, filters, hasActiveFilters]);
 
   // Debounced search
   useEffect(() => {
@@ -115,7 +126,7 @@ export function SearchBar() {
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [query, filters]);
+  }, [fetchResults]);
 
   const handleClear = () => {
     setQuery("");
