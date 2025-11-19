@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Circle background -->
+  <circle cx="256" cy="256" r="256" fill="#22c55e"/>
+
+  <!-- Simplified brain shape -->
+  <g fill="white">
+    <!-- Left side -->
+    <ellipse cx="200" cy="220" rx="70" ry="80"/>
+    <ellipse cx="180" cy="180" rx="40" ry="50"/>
+    <ellipse cx="220" cy="160" rx="35" ry="40"/>
+
+    <!-- Right side -->
+    <ellipse cx="312" cy="220" rx="70" ry="80"/>
+    <ellipse cx="332" cy="180" rx="40" ry="50"/>
+    <ellipse cx="292" cy="160" rx="35" ry="40"/>
+
+    <!-- Brain stem -->
+    <rect x="236" y="280" width="40" height="80" rx="10"/>
+  </g>
+
+  <!-- Brain folds (darker lines) -->
+  <g fill="none" stroke="#22c55e" stroke-width="6" stroke-linecap="round">
+    <path d="M160 200 Q180 180 160 160"/>
+    <path d="M200 240 Q220 220 200 200"/>
+    <path d="M352 200 Q332 180 352 160"/>
+    <path d="M312 240 Q292 220 312 200"/>
+  </g>
+</svg>

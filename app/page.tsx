@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Category, categoryArray, categoryIcons, categoryDescriptions } from "@/types";
 import { SearchBar } from "@/components/search-bar";
 
+// Force dynamic rendering to always fetch fresh data
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const tipCounts = await prisma.tip.groupBy({
     by: ["category"],
