@@ -36,6 +36,19 @@ export async function PATCH(
       );
     }
 
+    // Check if target user exists
+    const targetUser = await prisma.user.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+
+    if (!targetUser) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
     // Prevent admin from removing their own admin role
     if (id === session.user.id && role === "user") {
       return NextResponse.json(
@@ -88,6 +101,19 @@ export async function DELETE(
     }
 
     const { id } = await params;
+
+    // Check if target user exists
+    const targetUser = await prisma.user.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+
+    if (!targetUser) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
 
     // Prevent admin from deleting themselves
     if (id === session.user.id) {
