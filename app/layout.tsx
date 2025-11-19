@@ -10,6 +10,20 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Healthy Lifestyle Tips",
   description: "Your guide to better sleep, nutrition, movement, and stress management",
+  keywords: ["health", "lifestyle", "tips", "sleep", "nutrition", "movement", "stress management", "wellness"],
+  authors: [{ name: "Healthy Lifestyle Tips" }],
+  openGraph: {
+    title: "Healthy Lifestyle Tips",
+    description: "Discover practical tips for better sleep, nutrition, movement, and stress management. Start your journey to a healthier you today!",
+    type: "website",
+    locale: "en_US",
+    siteName: "Healthy Lifestyle Tips",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Healthy Lifestyle Tips",
+    description: "Discover practical tips for better sleep, nutrition, movement, and stress management.",
+  },
 };
 
 export default function RootLayout({
