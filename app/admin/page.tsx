@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   Users,
   FileText,
@@ -27,34 +27,19 @@ import {
   categoryIcons,
   categoryArray,
 } from "@/types";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const { toast } = useToast();
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [userToDelete, setUserToDelete] = useState<AdminUser | null>(null);
   const [updatingRole, setUpdatingRole] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (status === "loading") return;
-
-    if (!session?.user?.id) {
-      router.push("/");
-      return;
-    }
-
-    // Check if user is admin
-    if (session.user.role !== "admin") {
-      router.push("/");
-      return;
-    }
-
-    fetchData();
-  }, [session, status, router]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [statsRes, usersRes] = await Promise.all([
         fetch("/api/admin/stats"),
@@ -75,7 +60,24 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (status === "loading") return;
+
+    if (!session?.user?.id) {
+      router.push("/");
+      return;
+    }
+
+    // Check if user is admin
+    if (session.user.role !== "admin") {
+      router.push("/");
+      return;
+    }
+
+    fetchData();
+  }, [session, status, router, fetchData]);
 
   const handleRoleToggle = async (userId: string, currentRole: string) => {
     setUpdatingRole(userId);
@@ -109,11 +111,19 @@ export default function AdminPage() {
         }
       } else {
         const data = await res.json();
-        alert(data.error || "Failed to update role");
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: data.error || "Failed to update role",
+        });
       }
     } catch (error) {
       console.error("Failed to update role:", error);
-      alert("Failed to update role");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update role",
+      });
     } finally {
       setUpdatingRole(null);
     }
@@ -144,11 +154,19 @@ export default function AdminPage() {
         setUserToDelete(null);
       } else {
         const data = await res.json();
-        alert(data.error || "Failed to delete user");
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: data.error || "Failed to delete user",
+        });
       }
     } catch (error) {
       console.error("Failed to delete user:", error);
-      alert("Failed to delete user");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to delete user",
+      });
     }
   };
 
