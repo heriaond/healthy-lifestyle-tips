@@ -53,3 +53,5 @@ next-env.d.ts
 .yarn/install-state.gz
 .pnp.*
 
+# claude local settings
+settings.local.json
