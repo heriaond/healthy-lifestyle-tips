@@ -4,4 +4,5 @@ export type Tip = {
   title: string;
   description: string;
   createdAt: Date;
+  createdById?: string | null;
 };

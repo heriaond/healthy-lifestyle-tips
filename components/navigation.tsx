@@ -12,9 +12,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Heart, Home, Menu, Mail } from "lucide-react";
+import { Heart, Home, Menu, Mail, Plus, LogOut, Lightbulb } from "lucide-react";
 import { FaGoogle, FaDiscord } from "react-icons/fa";
 import { EmailOTPDialog } from "@/components/email-otp-dialog";
+import { AddTipDialog } from "@/components/add-tip-dialog";
 
 const categories = [
   { name: "Sleep", value: "SLEEP" },
@@ -34,7 +35,7 @@ export function Navigation() {
             <Link href="/" className="text-xl font-bold text-primary">
               Healthy Lifestyle Tips
             </Link>
-            
+
             <div className="hidden md:flex items-center gap-4">
               <Link href="/">
                 <Button variant="ghost" size="sm">
@@ -42,7 +43,7 @@ export function Navigation() {
                   Home
                 </Button>
               </Link>
-              
+
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm">
@@ -62,12 +63,26 @@ export function Navigation() {
               </DropdownMenu>
 
               {session && (
-                <Link href="/favorites">
-                  <Button variant="ghost" size="sm">
-                    <Heart className="mr-2 h-4 w-4" />
-                    Favorites
-                  </Button>
-                </Link>
+                <>
+                  <Link href="/favorites">
+                    <Button variant="ghost" size="sm">
+                      <Heart className="mr-2 h-4 w-4" />
+                      Favorites
+                    </Button>
+                  </Link>
+                  <Link href="/my-tips">
+                    <Button variant="ghost" size="sm">
+                      <Lightbulb className="mr-2 h-4 w-4" />
+                      My Tips
+                    </Button>
+                  </Link>
+                  <AddTipDialog>
+                    <Button variant="ghost" size="sm">
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add Tip
+                    </Button>
+                  </AddTipDialog>
+                </>
               )}
             </div>
           </div>
@@ -76,9 +91,15 @@ export function Navigation() {
             {session ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                  <Button
+                    variant="ghost"
+                    className="relative h-10 w-10 rounded-full"
+                  >
                     <Avatar>
-                      <AvatarImage src={session.user?.image || ""} alt={session.user?.name || ""} />
+                      <AvatarImage
+                        src={session.user?.image || ""}
+                        alt={session.user?.name || ""}
+                      />
                       <AvatarFallback>
                         {session.user?.name?.charAt(0).toUpperCase() || "U"}
                       </AvatarFallback>
@@ -94,14 +115,39 @@ export function Navigation() {
                       <p className="text-xs leading-none text-muted-foreground">
                         {session.user?.email}
                       </p>
+
+                      <p className="text-xs text-center leading-none text-muted-foreground !mt-2">
+                        ({session.user?.role || "user"})
+                      </p>
                     </div>
                   </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator className="md:hidden" />
                   <DropdownMenuItem asChild className="md:hidden">
-                    <Link href="/favorites">Favorites</Link>
+                    <Link href="/favorites">
+                      <Heart className="mr-2 h-4 w-4" />
+                      Favorites
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="md:hidden" />
+                  <DropdownMenuItem asChild className="md:hidden">
+                    <Link href="/my-tips">
+                      <Lightbulb className="mr-2 h-4 w-4" />
+                      My Tips
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="md:hidden" />
+                  <AddTipDialog>
+                    <DropdownMenuItem
+                      onSelect={(e) => e.preventDefault()}
+                      className="md:hidden"
+                    >
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add Tip
+                    </DropdownMenuItem>
+                  </AddTipDialog>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => signOut()}>
+                    <LogOut className="mr-2 h-4 w-4" />
                     Sign out
                   </DropdownMenuItem>
                 </DropdownMenuContent>

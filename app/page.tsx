@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Category, categoryArray, categoryIcons, categoryDescriptions } from "@/types";
+import { SearchBar } from "@/components/search-bar";
 
 export default async function Home() {
   const tipCounts = await prisma.tip.groupBy({
@@ -25,6 +26,10 @@ export default async function Home() {
           Discover practical tips for better sleep, nutrition, movement, and stress management.
           Start your journey to a healthier you today!
         </p>
+      </section>
+
+      <section>
+        <SearchBar />
       </section>
 
       <section>
