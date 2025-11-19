@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { TipCard } from "@/components/tip-card";
 import { Category, categoryArray, categoryIcons, categoryDescriptions } from "@/types";
@@ -12,6 +14,7 @@ export default async function CategoryPage({
 }: {
   params: Promise<{ category: string }>;
 }) {
+  const session = await getServerSession(authOptions);
   const { category: categoryParam } = await params;
   const category = categoryParam.toUpperCase() as Category;
 
@@ -23,6 +26,16 @@ export default async function CategoryPage({
     where: { category },
     orderBy: { createdAt: "desc" },
   });
+
+  // Get user's favorites
+  let favoritedTipIds = new Set<string>();
+  if (session?.user?.id) {
+    const favorites = await prisma.favorite.findMany({
+      where: { userId: session.user.id },
+      select: { tipId: true },
+    });
+    favoritedTipIds = new Set(favorites.map((f) => f.tipId));
+  }
 
   const Icon = categoryIcons[category];
 
@@ -40,7 +53,11 @@ export default async function CategoryPage({
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {tips.map((tip) => (
-          <TipCard key={tip.id} tip={tip} />
+          <TipCard
+            key={tip.id}
+            tip={tip}
+            initialFavorited={favoritedTipIds.has(tip.id)}
+          />
         ))}
       </div>
 

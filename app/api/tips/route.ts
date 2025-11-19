@@ -6,22 +6,96 @@ import { categoryArray, Category } from "@/types/categories";
 
 export async function GET(req: Request) {
   try {
+    const session = await getServerSession(authOptions);
     const { searchParams } = new URL(req.url);
     const search = searchParams.get("search") || "";
+    const categories = searchParams.get("categories")?.split(",").filter(Boolean) || [];
+    const searchIn = searchParams.get("searchIn") || "both";
+    const showFavorites = searchParams.get("favorites") === "true";
+    const showMyTips = searchParams.get("myTips") === "true";
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "9");
 
+    // Get user's favorites for filtering and display
+    let userFavoriteIds: string[] = [];
+    if (session?.user?.id) {
+      const favorites = await prisma.favorite.findMany({
+        where: { userId: session.user.id },
+        select: { tipId: true },
+      });
+      userFavoriteIds = favorites.map((f) => f.tipId);
+    }
+
+    // Build where clause
+    const whereConditions: any[] = [];
+
+    // Category filter
+    if (categories.length > 0) {
+      whereConditions.push({
+        category: { in: categories },
+      });
+    }
+
+    // Label filters (can be combined with OR)
+    if (session?.user?.id && (showFavorites || showMyTips)) {
+      const labelConditions: any[] = [];
+
+      if (showFavorites) {
+        labelConditions.push({
+          id: { in: userFavoriteIds },
+        });
+      }
+
+      if (showMyTips) {
+        labelConditions.push({
+          createdById: session.user.id,
+        });
+      }
+
+      if (labelConditions.length > 0) {
+        whereConditions.push({ OR: labelConditions });
+      }
+    }
+
+    // Search filter
+    if (search.trim()) {
+      const searchConditions: any[] = [];
+
+      if (searchIn === "title" || searchIn === "both") {
+        searchConditions.push({ title: { contains: search } });
+      }
+      if (searchIn === "description" || searchIn === "both") {
+        searchConditions.push({ description: { contains: search } });
+      }
+
+      if (searchConditions.length > 0) {
+        whereConditions.push({ OR: searchConditions });
+      }
+    }
+
+    const where = whereConditions.length > 0 ? { AND: whereConditions } : undefined;
+
+    // Get total count
+    const total = await prisma.tip.count({ where });
+
+    // Get paginated results
     const tips = await prisma.tip.findMany({
-      where: search
-        ? {
-            OR: [
-              { title: { contains: search } },
-              { description: { contains: search } },
-            ],
-          }
-        : undefined,
+      where,
       orderBy: { createdAt: "desc" },
+      skip: (page - 1) * limit,
+      take: limit,
     });
 
-    return NextResponse.json({ tips });
+    const totalPages = Math.ceil(total / limit);
+
+    return NextResponse.json({
+      tips,
+      total,
+      page,
+      totalPages,
+      hasMore: page < totalPages,
+      favoritedIds: userFavoriteIds,
+    });
   } catch (error) {
     console.error("Tips search error:", error);
     return NextResponse.json(
