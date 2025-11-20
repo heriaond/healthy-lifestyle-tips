@@ -94,6 +94,16 @@ export default async function Home() {
           })}
         </div>
       </section>
+
+      <section className="mt-16 text-center">
+        <div className="border-t pt-8">
+          <Link href="/about">
+            <Button size="lg" variant="outline" className="px-8 py-6 text-lg">
+              📖 O Projektu - Project Presentation
+            </Button>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
