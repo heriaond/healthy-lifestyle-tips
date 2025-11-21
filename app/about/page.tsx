@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 export default function AboutPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 12;
+  const totalSlides = 14;
 
   const changeSlide = (direction: number) => {
     const newSlide = currentSlide + direction;
@@ -642,8 +643,141 @@ export default function AboutPage() {
       </div>
     </div>,
 
-    // Slide 12: Conclusion
+    // Slide 12: Screenshots
     <div key={11} className="space-y-6">
+      <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
+        📸 Screenshoty Aplikace
+      </h2>
+      <div className="space-y-4">
+        <p className="text-lg text-gray-600">
+          Podívejte se na aplikaci v akci
+        </p>
+        <div className="grid grid-cols-1 gap-6">
+          <div className="bg-gray-50 p-4 rounded-lg border-2 border-purple-200">
+            <Image
+              src="/presentation-images/Screenshot 2025-11-21 153119.png"
+              alt="Screenshot aplikace 1"
+              width={1200}
+              height={800}
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg border-2 border-purple-200">
+            <Image
+              src="/presentation-images/Screenshot 2025-11-19 201849.png"
+              alt="Screenshot aplikace 2"
+              width={1200}
+              height={800}
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg border-2 border-purple-200">
+            <Image
+              src="/presentation-images/Screenshot 2025-11-21 153304.png"
+              alt="Screenshot aplikace 3"
+              width={1200}
+              height={800}
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </div>
+    </div>,
+
+    // Slide 13: A/B Testing
+    <div key={12} className="space-y-6">
+      <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
+        🧪 A/B Testování
+      </h2>
+      <div className="space-y-4">
+        <h3 className="text-2xl font-semibold text-purple-600">
+          Testovací scénáře
+        </h3>
+        <ul className="list-decimal ml-8 space-y-2 text-lg">
+          <li>Zobrazte si domovskou stránku webu. Na úvodní stránce najděte kategorii Spánek.</li>
+          <li>Otevřete kategorii Spánek a najděte tip s názvem „Večerní digitální detox&#34;.</li>
+          <li>Rozklikněte tento tip a přidejte si jej mezi oblíbené.</li>
+          <li>Přejděte do sekce Oblíbené a ověřte, že je tip uložen.</li>
+          <li className="text-gray-600 italic">(volitelný scénář): Přejdete na kartu nedávných tipů a přidejte si některý mezi oblíbené.</li>
+        </ul>
+        <div className="bg-purple-50 border-l-4 border-purple-600 p-4 rounded-lg mt-4">
+          <p className="text-sm">
+            Účastníci byli požádáni, aby během celého testu nahlas komentovali své
+          kroky („think aloud&#34; metoda)
+          </p>
+        </div>
+
+        <h3 className="text-2xl font-semibold text-purple-600 mt-6">
+          Výsledky testování
+        </h3>
+        <p className="text-lg leading-relaxed">
+          Během testování se ukázalo, že uživatelé se ve většině případů dobře
+          orientovali na obou variantách prototypu. Základní navigace mezi
+          kategoriemi i používání tlačítka pro přidání do oblíbených probíhalo
+          bez výrazných komplikací.
+        </p>
+
+        <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-600 p-4 rounded-lg">
+            <h4 className="text-xl font-semibold text-red-700 mb-3">
+              Varianta A
+            </h4>
+            <ul className="list-disc ml-4 space-y-2 text-sm">
+              <li>
+                Dva participanti krátce váhali při hledání sekce Favorites.
+                Primárně očekávali ikonku srdce nebo hvězdy.
+              </li>
+              <li>
+                Sekce byla zobrazena pouze jako textový odkaz v horním menu.
+              </li>
+              <li>
+                Jeden účastník sjel níže po stránce v domnění, že se oblíbené
+                položky zobrazují přímo v rámci homepage.
+              </li>
+              <li>
+                Hodnocena jako přehledná, ale vizuálně méně výrazná.
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-gradient-to-r from-green-50 to-green-100 border-l-4 border-green-600 p-4 rounded-lg">
+            <h4 className="text-xl font-semibold text-green-700 mb-3">
+              Varianta B
+            </h4>
+            <ul className="list-disc ml-4 space-y-2 text-sm">
+              <li>
+                Sekce Favorites doplněna o malou ikonku srdce vedle textu.
+              </li>
+              <li>
+                Všichni účastníci ji našli bez potíží.
+              </li>
+              <li>
+                Zvýrazněné karty kategorií s větší velikostí písma zabírají
+                více místa.
+              </li>
+              <li>
+                Hodnocena jako vizuálně atraktivnější a intuitivnější, avšak
+                poněkud „větší&#34;.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="bg-purple-50 border-l-4 border-purple-600 p-4 rounded-lg mt-4">
+          <h4 className="text-lg font-semibold text-purple-700 mb-2">
+            💡 Další postřehy
+          </h4>
+          <p className="text-sm">
+            Jeden účastník zmínil, že by uvítal více barevného odlišení
+            kategorií (např. každá kategorie jiný odstín), protože současné
+            barevné schéma působilo příliš jednotně.
+          </p>
+        </div>
+      </div>
+    </div>,
+
+    // Slide 14: Conclusion
+    <div key={13} className="space-y-6">
       <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
         🎯 Závěr
       </h2>
