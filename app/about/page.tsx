@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function AboutPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 15;
+  const totalSlides = 16;
 
   const changeSlide = (direction: number) => {
     const newSlide = currentSlide + direction;
@@ -596,8 +596,29 @@ export default function AboutPage() {
       </div>
     </div>,
 
-    // Slide 11: Deployment & Stats
+    // Slide 11: Google Page Insights
     <div key={10} className="space-y-6">
+      <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
+        📊 Google Page Insights - výsledky testování
+      </h2>
+      <div className="space-y-4">
+        <p className="text-lg text-gray-600">
+          Výsledky testování výkonu aplikace pomocí Google PageSpeed Insights
+        </p>
+        <div className="bg-gray-50 p-4 rounded-lg border-2 border-purple-200">
+          <Image
+            src="/google-insights.jpg"
+            alt="Google PageSpeed Insights výsledky"
+            width={1200}
+            height={800}
+            className="w-full h-auto rounded-lg shadow-lg"
+          />
+        </div>
+      </div>
+    </div>,
+
+    // Slide 12: Deployment & Stats
+    <div key={11} className="space-y-6">
       <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
         🚀 Deployment & Statistiky
       </h2>
@@ -643,8 +664,8 @@ export default function AboutPage() {
       </div>
     </div>,
 
-    // Slide 12: Screenshots
-    <div key={11} className="space-y-6">
+    // Slide 13: Screenshots
+    <div key={12} className="space-y-6">
       <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
         🔲 Wireframes
       </h2>
@@ -681,8 +702,8 @@ export default function AboutPage() {
       </div>
     </div>,
 
-    // Slide 13: A/B Testing
-    <div key={12} className="space-y-6">
+    // Slide 14: A/B Testing
+    <div key={13} className="space-y-6">
       <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
         🧪 A/B Testování
       </h2>
@@ -773,8 +794,8 @@ export default function AboutPage() {
       </div>
     </div>,
 
-    // Slide 14: Usability and Accessibility - 5 Second Test
-    <div key={13} className="space-y-6">
+    // Slide 15: Usability and Accessibility - 5 Second Test
+    <div key={14} className="space-y-6">
       <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
         👨‍🔬 Použitelnost a přístupnost
       </h2>
@@ -855,8 +876,8 @@ export default function AboutPage() {
       </div>
     </div>,
 
-    // Slide 15: Conclusion
-    <div key={14} className="space-y-6">
+    // Slide 16: Conclusion
+    <div key={15} className="space-y-6">
       <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
         🎯 Závěr
       </h2>
