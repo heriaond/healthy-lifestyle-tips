@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function AboutPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 14;
+  const totalSlides = 15;
 
   const changeSlide = (direction: number) => {
     const newSlide = currentSlide + direction;
@@ -776,8 +776,90 @@ export default function AboutPage() {
       </div>
     </div>,
 
-    // Slide 14: Conclusion
+    // Slide 14: Usability and Accessibility - 5 Second Test
     <div key={13} className="space-y-6">
+      <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
+        👨‍🔬 Použitelnost a přístupnost
+      </h2>
+      <div className="space-y-4">
+        <h3 className="text-2xl font-semibold text-purple-600">
+          5 second test
+        </h3>
+        <p className="text-lg leading-relaxed">
+          Pětivteřinový test spočívá v tom, že účastníkovi je na 5 vteřin ukázán
+          snímek domovské stránky. Po krátkém zhlédnutí má participant zodpovědět
+          několik otázek týkajících se účelu webu, vizuálních prvků a prvního
+          dojmu. Test pomáhá zjistit, zda je pro uživatele na první pohled jasné:
+        </p>
+        <ul className="list-disc ml-8 space-y-2 text-lg">
+          <li>o čem web je,</li>
+          <li>jaké kategorie obsahuje,</li>
+          <li>co může na stránce dělat.</li>
+        </ul>
+
+        <h3 className="text-2xl font-semibold text-purple-600 mt-6">
+          Otázky testování
+        </h3>
+        <div className="bg-purple-50 border-l-4 border-purple-600 p-4 rounded-lg">
+          <ol className="list-decimal ml-4 space-y-2">
+            <li>Jaký je účel promítnuté webové stránky? K čemu tento web slouží?</li>
+            <li>Co vás na stránce zaujalo jako první?</li>
+            <li>Jakým dojmem na vás stránka působí (přehlednost, vizuální styl, důvěryhodnost)?</li>
+          </ol>
+        </div>
+
+        <h3 className="text-2xl font-semibold text-purple-600 mt-6">
+          Výsledky testování
+        </h3>
+        <p className="text-base leading-relaxed mb-4">
+          Účastníkům byl na 5 vteřin ukázán statický snímek domovské stránky
+          Healthy Lifestyle Tips. Poté měli možnost krátce stránku posouvat, ale
+          nikoli klikat. Test byl proveden na čtyřech osobách.
+        </p>
+
+        <div className="space-y-3">
+          <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-l-4 border-blue-600 p-4 rounded-lg">
+            <h4 className="font-semibold text-blue-700 mb-2">
+              1️⃣ Jaký je účel promítnuté webové stránky?
+            </h4>
+            <p className="text-md">
+              <strong>3 ze 4 participantů</strong> bez zaváhání určilo hlavní účel
+              jako „stránku s tipy pro zdravý životní styl&#34; nebo „wellness
+              doporučení&#34;. Nejčastěji zmiňovali, že karty kategorií (Sleep /
+              Nutrition / Movement / Stress) jsou natolik výrazné, že se orientovali
+              okamžitě.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-green-50 to-green-100 border-l-4 border-green-600 p-4 rounded-lg">
+            <h4 className="font-semibold text-green-700 mb-2">
+              2️⃣ Co vás na stránce zaujalo jako první?
+            </h4>
+            <p className="text-md">
+              <strong>Všechny účastníky</strong> jako první upoutala sekce Browse by
+              Category, zejména velké karty s ikonami. Jeden z participantů uvedl,
+              že nejdříve si všiml nadpisu &#34;Welcome to Healthy Lifestyle Tips&#34;,
+              který působí přátelsky a jasně vysvětluje účel.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-purple-50 to-purple-100 border-l-4 border-purple-600 p-4 rounded-lg">
+            <h4 className="font-semibold text-purple-700 mb-2">
+              3️⃣ Jakým dojmem na vás stránka působí?
+            </h4>
+            <p className="text-md">
+              Většina hodnotila stránku jako <strong>moderní, čistou, přehlednou a
+              dobře uspořádanou</strong>. Výjimkou byla zmínka ohledně barevného
+              schématu — jeden účastník by uvítal více kontrastů mezi kartami nebo
+              jemné barevné odlišení jednotlivých kategorií.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>,
+
+    // Slide 15: Conclusion
+    <div key={14} className="space-y-6">
       <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
         🎯 Závěr
       </h2>
