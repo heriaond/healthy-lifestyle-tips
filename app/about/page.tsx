@@ -646,12 +646,9 @@ export default function AboutPage() {
     // Slide 12: Screenshots
     <div key={11} className="space-y-6">
       <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
-        📸 Screenshoty Aplikace
+        🔲 Wireframes
       </h2>
       <div className="space-y-4">
-        <p className="text-lg text-gray-600">
-          Podívejte se na aplikaci v akci
-        </p>
         <div className="grid grid-cols-1 gap-6">
           <div className="bg-gray-50 p-4 rounded-lg border-2 border-purple-200">
             <Image
