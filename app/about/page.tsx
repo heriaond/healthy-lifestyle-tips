@@ -122,7 +122,7 @@ export default function AboutPage() {
           {
             icon: "🔍",
             title: "Vyhledávání",
-            desc: "Filtrování podle kategorií",
+            desc: "Full-text search v titulku/popisu + filtry kategorií + stránkování",
           },
           {
             icon: "📱",
@@ -262,18 +262,28 @@ export default function AboutPage() {
 │  │  │         API Routes                      │    │   │
 │  │  │                                          │    │   │
 │  │  │  • /api/auth/[...nextauth]              │    │   │
-│  │  │    - NextAuth.js endpoints              │    │   │
+│  │  │    - NextAuth.js (signin, signout...)   │    │   │
+│  │  │  • /api/auth/send-otp                   │    │   │
+│  │  │    - POST: Odeslání OTP emailem         │    │   │
+│  │  │  • /api/auth/verify-otp                 │    │   │
+│  │  │    - POST: Ověření OTP kódu             │    │   │
 │  │  │                                          │    │   │
 │  │  │  • /api/favorites                       │    │   │
-│  │  │    - GET: Získat oblíbené               │    │   │
-│  │  │    - POST: Přidat oblíbený              │    │   │
-│  │  │    - DELETE: Odebrat oblíbený           │    │   │
+│  │  │    - POST: Přidat/odebrat oblíbený      │    │   │
 │  │  │                                          │    │   │
 │  │  │  • /api/tips                            │    │   │
-│  │  │    - GET: Získat tipy                   │    │   │
+│  │  │    - GET: Vyhledávání tipů (DB query)   │    │   │
 │  │  │    - POST: Vytvořit tip                 │    │   │
-│  │  │    - PUT: Upravit tip                   │    │   │
+│  │  │  • /api/tips/:id                        │    │   │
 │  │  │    - DELETE: Smazat tip                 │    │   │
+│  │  │                                          │    │   │
+│  │  │  • /api/admin/stats                     │    │   │
+│  │  │    - GET: Statistiky (admin only)       │    │   │
+│  │  │  • /api/admin/users                     │    │   │
+│  │  │    - GET: Všichni uživatelé (admin)     │    │   │
+│  │  │  • /api/admin/users/:id                 │    │   │
+│  │  │    - PATCH: Změna role uživatele        │    │   │
+│  │  │    - DELETE: Smazání uživatele          │    │   │
 │  │  └─────────────────────────────────────────┘    │   │
 │  └───────────────────────┬──────────────────────────┘   │
 └──────────────────────────┼──────────────────────────────┘
@@ -402,71 +412,84 @@ export default function AboutPage() {
     </div>,
 
     // Slide 8: API Endpoints
-    <div key={7} className="space-y-6">
+    <div key={7} className="space-y-4">
       <h2 className="text-4xl font-bold text-purple-700 border-b-4 border-purple-600 pb-3">
         🔌 API Endpointy
       </h2>
-      <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
         <div>
-          <h3 className="text-xl font-semibold text-purple-600 mb-2">
+          <h3 className="text-lg font-semibold text-purple-600 mb-2">
             Authentication
           </h3>
-          <div className="space-y-2 bg-gray-50 p-4 rounded-lg">
-            <div className="font-mono text-sm bg-white p-2 rounded">
-              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">
-                POST
-              </span>
+          <div className="space-y-2 bg-gray-50 p-3 rounded-lg">
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">POST</span>
               <code>/api/auth/signin</code> - Přihlášení
             </div>
-            <div className="font-mono text-sm bg-white p-2 rounded">
-              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">
-                POST
-              </span>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">POST</span>
               <code>/api/auth/signout</code> - Odhlášení
             </div>
-            <div className="font-mono text-sm bg-white p-2 rounded">
-              <span className="px-2 py-1 bg-green-500 text-white rounded text-xs font-bold mr-2">
-                GET
-              </span>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-green-500 text-white rounded text-xs font-bold mr-2">GET</span>
               <code>/api/auth/session</code> - Získání session
+            </div>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">POST</span>
+              <code>/api/auth/send-otp</code> - Odeslání OTP emailem
+            </div>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">POST</span>
+              <code>/api/auth/verify-otp</code> - Ověření OTP kódu
             </div>
           </div>
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold text-purple-600 mb-2">
-            Favorites & Tips
+          <h3 className="text-lg font-semibold text-purple-600 mb-2">
+            Tips & Favorites
           </h3>
-          <div className="space-y-2 bg-gray-50 p-4 rounded-lg">
-            <div className="font-mono text-sm bg-white p-2 rounded">
-              <span className="px-2 py-1 bg-green-500 text-white rounded text-xs font-bold mr-2">
-                GET
-              </span>
-              <code>/api/favorites</code> - Získat oblíbené
+          <div className="space-y-2 bg-gray-50 p-3 rounded-lg">
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-green-500 text-white rounded text-xs font-bold mr-2">GET</span>
+              <code>/api/tips</code> - Vyhledávání tipů z DB
+              <div className="text-gray-500 ml-4 mt-1">?search= &categories= &searchIn= &page= &limit=</div>
             </div>
-            <div className="font-mono text-sm bg-white p-2 rounded">
-              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">
-                POST
-              </span>
-              <code>/api/favorites</code> - Přidat do oblíbených
-            </div>
-            <div className="font-mono text-sm bg-white p-2 rounded">
-              <span className="px-2 py-1 bg-green-500 text-white rounded text-xs font-bold mr-2">
-                GET
-              </span>
-              <code>/api/tips</code> - Získat všechny tipy
-            </div>
-            <div className="font-mono text-sm bg-white p-2 rounded">
-              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">
-                POST
-              </span>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">POST</span>
               <code>/api/tips</code> - Vytvořit tip
             </div>
-            <div className="font-mono text-sm bg-white p-2 rounded">
-              <span className="px-2 py-1 bg-red-500 text-white rounded text-xs font-bold mr-2">
-                DELETE
-              </span>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-red-500 text-white rounded text-xs font-bold mr-2">DELETE</span>
               <code>/api/tips/:id</code> - Smazat tip
+            </div>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs font-bold mr-2">POST</span>
+              <code>/api/favorites</code> - Toggle oblíbený (přidat/odebrat)
+            </div>
+          </div>
+        </div>
+
+        <div className="col-span-2">
+          <h3 className="text-lg font-semibold text-purple-600 mb-2">
+            Admin (vyžaduje roli admin)
+          </h3>
+          <div className="grid grid-cols-3 gap-2 bg-gray-50 p-3 rounded-lg">
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-green-500 text-white rounded text-xs font-bold mr-2">GET</span>
+              <code>/api/admin/stats</code> - Statistiky DB
+            </div>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-green-500 text-white rounded text-xs font-bold mr-2">GET</span>
+              <code>/api/admin/users</code> - Všichni uživatelé
+            </div>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-yellow-500 text-white rounded text-xs font-bold mr-2">PATCH</span>
+              <code>/api/admin/users/:id</code> - Změna role
+            </div>
+            <div className="font-mono text-xs bg-white p-2 rounded">
+              <span className="px-2 py-1 bg-red-500 text-white rounded text-xs font-bold mr-2">DELETE</span>
+              <code>/api/admin/users/:id</code> - Smazat uživatele
             </div>
           </div>
         </div>
@@ -485,6 +508,7 @@ export default function AboutPage() {
             items: [
               "NextAuth.js session management",
               "OAuth 2.0 (Google)",
+              "Email OTP (Nodemailer)",
               "CSRF ochrana",
               "Secure cookies",
             ],
@@ -648,7 +672,7 @@ export default function AboutPage() {
             { num: "50+", label: "Komponent a Stránek" },
             { num: "15+", label: "Hlavních Knihoven" },
             { num: "6", label: "Database Models" },
-            { num: "5+", label: "API Endpoints" },
+            { num: "11+", label: "API Endpoints" },
             { num: "4", label: "Kategorie Tipů" },
             { num: "99.9%", label: "Uptime" },
           ].map((stat, idx) => (
@@ -889,8 +913,10 @@ export default function AboutPage() {
           <ul className="list-disc ml-6 text-lg space-y-2">
             <li>✅ Moderní Next.js 15 s App Router</li>
             <li>✅ Type-safe development s TypeScript</li>
-            <li>✅ Autentizace s NextAuth.js (Google OAuth + Email)</li>
-            <li>✅ Databázové operace s Prisma ORM</li>
+            <li>✅ Autentizace s NextAuth.js (Google OAuth + Email OTP)</li>
+            <li>✅ Databázové operace s Prisma ORM (PostgreSQL)</li>
+            <li>✅ Full-text vyhledávání s filtry a stránkováním</li>
+            <li>✅ Admin panel pro správu uživatelů a statistik</li>
             <li>✅ Responzivní design s Tailwind CSS</li>
             <li>✅ Komponentová architektura (shadcn/ui)</li>
           </ul>
@@ -919,9 +945,17 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-purple-700 mb-4">
             Projekt je LIVE a dostupný online! 🎉
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-600 mb-3">
             Full-stack aplikace připravená k dalšímu rozšiřování a škálování
           </p>
+          <a
+            href="https://healthy-lifestyle-tips.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full font-bold text-lg hover:opacity-90 transition-opacity"
+          >
+            🌐 healthy-lifestyle-tips.vercel.app
+          </a>
         </div>
       </div>
     </div>,

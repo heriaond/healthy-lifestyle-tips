@@ -1,15 +1,21 @@
 # Healthy Lifestyle Tips
 
+**Live:** [https://healthy-lifestyle-tips.vercel.app/](https://healthy-lifestyle-tips.vercel.app/)
+
 A Next.js web application for discovering and saving healthy lifestyle tips across four categories: Sleep, Nutrition, Movement, and Stress Management.
 
 ## Features
 
 - **Browse Tips by Category**: Explore health tips organized into Sleep, Nutrition, Movement, and Stress categories
+- **Search & Filter**: Full-text search across tip titles and descriptions with category filtering and pagination
 - **Google OAuth Authentication**: Sign in securely with your Google account
+- **Email OTP Authentication**: Sign in via one-time password sent to your email
 - **Favorite Tips**: Save your favorite tips for easy access later
+- **My Tips**: Create and manage your own health tips
+- **Admin Panel**: Admin dashboard for managing users and viewing statistics
 - **Responsive Design**: Built with Tailwind CSS and shadcn/ui components
 - **Type-Safe**: Full TypeScript support
-- **Database**: SQLite with Prisma ORM
+- **Database**: PostgreSQL with Prisma ORM
 
 ## Tech Stack
 
@@ -17,14 +23,17 @@ A Next.js web application for discovering and saving healthy lifestyle tips acro
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui (built on Radix UI)
-- **Authentication**: NextAuth.js with Google OAuth
-- **Database**: SQLite with Prisma ORM
+- **Authentication**: NextAuth.js with Google OAuth + Email OTP (Nodemailer)
+- **Database**: PostgreSQL (Vercel Postgres) with Prisma ORM
 - **Icons**: Lucide React
+- **Deployment**: Vercel
 
 ## Prerequisites
 
 - Node.js 18+ and yarn
 - A Google Cloud Platform account (for OAuth credentials)
+- A PostgreSQL database (e.g. Vercel Postgres)
+- An SMTP email account (for OTP emails)
 
 ## Getting Started
 
@@ -45,11 +54,16 @@ cp .env.example .env
 Then update the `.env` file with your credentials:
 
 ```env
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://user:password@host:5432/dbname"
 NEXTAUTH_URL="http://localhost:3000"
 NEXTAUTH_SECRET="your-secret-key-here"
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
+EMAIL_SERVER_HOST="smtp.example.com"
+EMAIL_SERVER_PORT="587"
+EMAIL_SERVER_USER="your-email@example.com"
+EMAIL_SERVER_PASSWORD="your-email-password"
+EMAIL_FROM="your-email@example.com"
 ```
 
 **To generate a NEXTAUTH_SECRET:**
@@ -83,7 +97,7 @@ Seed the database with sample tips:
 yarn db:seed
 ```
 
-Previewe the database
+Preview the database:
 
 ```bash
 yarn db:studio
@@ -113,10 +127,15 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 healthy-lifestyle-tips/
 ├── app/                      # Next.js App Router pages
 │   ├── api/                 # API routes
-│   │   ├── auth/           # NextAuth.js routes
-│   │   └── favorites/      # Favorites API
+│   │   ├── auth/           # NextAuth.js + OTP routes
+│   │   ├── tips/           # Tips CRUD API
+│   │   ├── favorites/      # Favorites toggle API
+│   │   └── admin/          # Admin-only API routes
 │   ├── category/[category]/ # Category pages
 │   ├── favorites/          # Favorites page
+│   ├── my-tips/            # User's own tips page
+│   ├── admin/              # Admin dashboard
+│   ├── about/              # Project presentation
 │   ├── globals.css         # Global styles
 │   ├── layout.tsx          # Root layout
 │   └── page.tsx            # Homepage
@@ -124,7 +143,8 @@ healthy-lifestyle-tips/
 │   ├── ui/                 # shadcn/ui components
 │   ├── navigation.tsx      # Navigation bar
 │   ├── providers.tsx       # Session provider
-│   └── tip-card.tsx        # Tip card component
+│   ├── tip-card.tsx        # Tip card component
+│   └── search-bar.tsx      # Search & filter component
 ├── lib/                     # Utility functions
 │   ├── auth.ts             # NextAuth configuration
 │   ├── prisma.ts           # Prisma client
@@ -140,24 +160,27 @@ healthy-lifestyle-tips/
 
 The application uses the following main models:
 
-- **User**: User accounts (NextAuth)
+- **User**: User accounts with role support (`user` / `admin`)
 - **Account**: OAuth accounts (NextAuth)
 - **Session**: User sessions (NextAuth)
-- **Tip**: Health tips with category, title, and description
-- **Favorite**: User's favorited tips
+- **Tip**: Health tips with category, title, description, and author
+- **Favorite**: User's favorited tips (unique per user+tip)
 
 ## Features in Detail
 
 ### Authentication
 
-- Users can sign in with their Google account
+- Sign in with Google OAuth
+- Sign in with Email OTP (one-time password sent via email)
 - Session management handled by NextAuth.js
 - Protected routes require authentication
 
-### Browse Tips
+### Browse & Search Tips
 
 - Tips are organized into four categories: Sleep, Nutrition, Movement, and Stress
-- Each category has a dedicated page showing all relevant tips
+- Full-text search across titles and/or descriptions
+- Filter by one or multiple categories
+- Pagination support
 - Homepage displays recent tips and category overview
 
 ### Favorites
@@ -166,34 +189,32 @@ The application uses the following main models:
 - Favorites page shows all saved tips
 - Favorite status persists across sessions
 
-## Customization
+### My Tips
 
-### Adding More Tips
+- Authenticated users can create their own tips
+- Users can delete tips they created
+- Admins can delete any tip
 
-You can add more tips by editing `prisma/seed.ts` and running:
+### Admin Panel
 
-```bash
-yarn db:seed
-```
-
-### Styling
-
-- Modify `app/globals.css` to change the color scheme
-- Update `tailwind.config.ts` for Tailwind customization
-- Edit component styles in individual component files
+- View site statistics (total users, tips, favorites, per-category counts)
+- List all users with their tip and favorite counts
+- Promote/demote users to admin role
+- Delete user accounts
 
 ## Troubleshooting
 
 **Database errors:**
 
 - Make sure to run `yarn db:push` after any schema changes
-- Delete `prisma/dev.db` and re-run migrations for a fresh start
+- Ensure `DATABASE_URL` points to a valid PostgreSQL connection string
 
 **Authentication errors:**
 
 - Verify your Google OAuth credentials are correct
 - Ensure the redirect URI matches exactly in Google Cloud Console
-- Check that NEXTAUTH_SECRET is set and NEXTAUTH_URL matches your dev server
+- Check that `NEXTAUTH_SECRET` is set and `NEXTAUTH_URL` matches your dev server
+- For OTP emails, verify your SMTP credentials are correct
 
 ## License
 

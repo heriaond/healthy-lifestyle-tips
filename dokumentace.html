@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dokumentace – Healthy Lifestyle Tips</title>
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12pt;
+      line-height: 1.6;
+      margin: 2.5cm 3cm;
+      color: #000;
+    }
+    h1 {
+      font-size: 22pt;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 60px;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: 16pt;
+      font-weight: bold;
+      margin-top: 40px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #000;
+      padding-bottom: 4px;
+    }
+    h3 {
+      font-size: 13pt;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 6px;
+    }
+    p {
+      margin: 8px 0;
+      text-align: justify;
+    }
+    ul, ol {
+      margin: 8px 0 8px 24px;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 11pt;
+    }
+    th {
+      background-color: #d0d0d0;
+      border: 1px solid #555;
+      padding: 6px 10px;
+      text-align: left;
+      font-weight: bold;
+    }
+    td {
+      border: 1px solid #888;
+      padding: 6px 10px;
+      vertical-align: top;
+    }
+    pre, code {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 10pt;
+      background-color: #f4f4f4;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    pre {
+      padding: 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      margin: 12px 0;
+    }
+    code {
+      padding: 1px 4px;
+    }
+    .center {
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 14pt;
+      text-align: center;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    .meta {
+      font-size: 11pt;
+      text-align: center;
+      color: #555;
+      margin-bottom: 60px;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+    .toc-item {
+      margin: 4px 0;
+    }
+    .toc-item a {
+      text-decoration: none;
+      color: #000;
+    }
+    .note {
+      background-color: #f9f9f9;
+      border-left: 4px solid #888;
+      padding: 8px 12px;
+      margin: 12px 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TITULNÍ STRANA -->
+<div style="min-height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+  <h1>Healthy Lifestyle Tips</h1>
+  <p class="subtitle">Webová aplikace pro zdravý životní styl</p>
+  <br/>
+  <p class="meta">
+    Dokumentace studentského projektu<br/>
+    Předmět: Internetové technologie – klient side<br/>
+    <strong>Skupina č. 10</strong><br/>
+    <br/>
+    Ondřej Herian &nbsp;|&nbsp; Petr Herian &nbsp;|&nbsp; Vojtěch Veber<br/>
+    <br/>
+    Akademický rok 2025/26
+  </p>
+</div>
+
+<!-- OBSAH -->
+<div class="page-break">
+  <h2>Obsah</h2>
+  <ol>
+    <li class="toc-item">Úvod</li>
+    <li class="toc-item">Cíle projektu</li>
+    <li class="toc-item">Datový model (databázové schéma)</li>
+    <li class="toc-item">Use Case</li>
+    <li class="toc-item">Použité technologie
+      <ol style="list-style-type: decimal; margin-top: 4px;">
+        <li class="toc-item">Frontend, Backend, Databáze</li>
+        <li class="toc-item">Frameworky</li>
+        <li class="toc-item">Bezpečnost</li>
+        <li class="toc-item">Zdroje</li>
+      </ol>
+    </li>
+    <li class="toc-item">Příklady implementace</li>
+    <li class="toc-item">Testování (uživatelské)</li>
+    <li class="toc-item">Monitoring</li>
+    <li class="toc-item">Tým, kompetence, strávená doba</li>
+    <li class="toc-item">Závěr</li>
+  </ol>
+</div>
+
+<!-- 1. ÚVOD -->
+<div class="page-break">
+  <h2>1. Úvod</h2>
+  <p>Tento dokument je projektovou dokumentací k webové aplikaci <strong>Healthy Lifestyle Tips</strong>, vytvořené v rámci předmětu Internetové technologie – klient side. Projekt byl realizován týmem tří studentů (Skupina č. 10) v průběhu akademického roku 2025/26.</p>
+  <p>Aplikace slouží jako platforma pro sdílení a objevování tipů pro zdravý životní styl. Uživatelé mohou procházet tipy rozdělené do čtyř tematických kategorií: <em>Sleep</em> (spánek), <em>Nutrition</em> (výživa), <em>Movement</em> (pohyb) a <em>Stress</em> (stres). Po přihlášení mají možnost ukládat oblíbené tipy, přidávat vlastní obsah a spravovat svůj profil.</p>
+  <p>Projekt je postaven na technologii Next.js 15 s využitím App Routeru, TypeScriptu, PostgreSQL databáze a je nasazen na cloudové platformě Vercel. Zdrojový kód je dostupný v repozitáři na platformě GitHub.</p>
+</div>
+
+<!-- 2. CÍLE -->
+<div class="page-break">
+  <h2>2. Cíle projektu</h2>
+  <p>Hlavním cílem projektu bylo vytvořit plně funkční full-stack webovou aplikaci, která prokáže schopnost týmu pracovat s moderními webovými technologiemi. Konkrétní cíle projektu byly:</p>
+
+  <h3>Funkční cíle</h3>
+  <ul>
+    <li>Umožnit uživatelům procházet tipy pro zdravý životní styl rozdělené do kategorií</li>
+    <li>Implementovat full-text vyhledávání a filtrování tipů</li>
+    <li>Zajistit bezpečnou autentizaci pomocí Google OAuth a e-mailového OTP</li>
+    <li>Umožnit přihlášeným uživatelům ukládat, přidávat a spravovat tipy</li>
+    <li>Vytvořit administrátorský panel pro správu uživatelů a obsahu</li>
+  </ul>
+
+  <h3>Technické cíle</h3>
+  <ul>
+    <li>Postavit aplikaci na Next.js 15 s App Routerem a TypeScriptem</li>
+    <li>Propojit aplikaci s PostgreSQL databází přes Prisma ORM</li>
+    <li>Vytvořit RESTful API s více než 10 endpointy</li>
+    <li>Nasadit aplikaci do produkce na Vercel s automatickým CI/CD</li>
+    <li>Zajistit responzivní design pro mobilní i desktopová zařízení</li>
+  </ul>
+</div>
+
+<!-- 3. DATOVÝ MODEL -->
+<div class="page-break">
+  <h2>3. Datový model (databázové schéma)</h2>
+  <p>Aplikace využívá relační databázi PostgreSQL přístupnou přes Prisma ORM. Schéma databáze je definováno v souboru <code>prisma/schema.prisma</code> a obsahuje celkem 6 modelů.</p>
+
+  <h3>Přehled modelů</h3>
+  <table>
+    <tr>
+      <th>Model</th>
+      <th>Popis</th>
+      <th>Klíčové atributy</th>
+    </tr>
+    <tr>
+      <td><strong>User</strong></td>
+      <td>Uživatel aplikace</td>
+      <td>id, name, email, role, image, emailVerified</td>
+    </tr>
+    <tr>
+      <td><strong>Account</strong></td>
+      <td>OAuth účet uživatele (NextAuth)</td>
+      <td>provider, providerAccountId, access_token</td>
+    </tr>
+    <tr>
+      <td><strong>Session</strong></td>
+      <td>Aktivní session uživatele (NextAuth)</td>
+      <td>sessionToken, userId, expires</td>
+    </tr>
+    <tr>
+      <td><strong>VerificationToken</strong></td>
+      <td>Token pro ověření e-mailu / OTP</td>
+      <td>identifier, token, expires</td>
+    </tr>
+    <tr>
+      <td><strong>Tip</strong></td>
+      <td>Tip pro zdravý životní styl</td>
+      <td>id, category, title, description, createdAt, createdById</td>
+    </tr>
+    <tr>
+      <td><strong>Favorite</strong></td>
+      <td>Oblíbený tip uživatele</td>
+      <td>id, userId, tipId, createdAt</td>
+    </tr>
+  </table>
+
+  <h3>Schéma Prisma</h3>
+  <pre>// NextAuth modely
+model User {
+  id            String     @id @default(cuid())
+  name          String?
+  email         String?    @unique
+  emailVerified DateTime?
+  image         String?
+  role          String     @default("user") // "admin" nebo "user"
+  accounts      Account[]
+  sessions      Session[]
+  favorites     Favorite[]
+  createdTips   Tip[]
+}
+
+model Tip {
+  id          String     @id @default(cuid())
+  category    String     // SLEEP, NUTRITION, MOVEMENT, STRESS
+  title       String
+  description String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  createdById String?
+  createdBy   User?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  favorites   Favorite[]
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  tipId     String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tip  Tip  @relation(fields: [tipId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tipId])
+}</pre>
+
+  <h3>Vztahy mezi modely</h3>
+  <ul>
+    <li><strong>User → Account</strong>: 1:N – uživatel může mít více OAuth účtů (Google, aj.)</li>
+    <li><strong>User → Session</strong>: 1:N – uživatel může mít více aktivních sessions</li>
+    <li><strong>User → Tip</strong>: 1:N – uživatel může vytvořit více tipů</li>
+    <li><strong>User → Favorite</strong>: 1:N – uživatel může mít více oblíbených tipů</li>
+    <li><strong>Tip → Favorite</strong>: 1:N – tip může být oblíbený u více uživatelů</li>
+    <li><strong>User ↔ Tip</strong> (přes Favorite): M:N – uživatelé a tipy jsou propojeni přes pivot tabulku Favorite</li>
+  </ul>
+  <p>Kaskádové mazání je nastaveno tak, že při smazání uživatele se automaticky smažou jeho sessions, OAuth účty a oblíbené tipy. Tipy vytvořené smazaným uživatelem zůstanou zachovány (createdById se nastaví na NULL).</p>
+</div>
+
+<!-- 4. USE CASE -->
+<div class="page-break">
+  <h2>4. Use Case</h2>
+  <p>Aplikace rozlišuje tři typy uživatelů: <strong>Nepřihlášený návštěvník</strong>, <strong>Přihlášený uživatel</strong> a <strong>Administrátor</strong>.</p>
+
+  <h3>Nepřihlášený návštěvník</h3>
+  <ul>
+    <li>Prohlíží tipy na úvodní stránce</li>
+    <li>Filtruje tipy podle kategorií (Sleep, Nutrition, Movement, Stress)</li>
+    <li>Vyhledává tipy pomocí full-text vyhledávání</li>
+    <li>Přihlásí se pomocí Google OAuth nebo e-mailového OTP</li>
+  </ul>
+
+  <h3>Přihlášený uživatel</h3>
+  <ul>
+    <li>Vše co nepřihlášený návštěvník, plus:</li>
+    <li>Přidá tip do oblíbených / odebere z oblíbených</li>
+    <li>Zobrazí svou stránku oblíbených tipů</li>
+    <li>Vytvoří vlastní tip (title, description, category)</li>
+    <li>Smaže vlastní tip</li>
+    <li>Zobrazí stránku „Moje tipy"</li>
+    <li>Odhlásí se</li>
+  </ul>
+
+  <h3>Administrátor</h3>
+  <ul>
+    <li>Vše co přihlášený uživatel, plus:</li>
+    <li>Zobrazí administrátorský panel</li>
+    <li>Prohlíží statistiky databáze (počty uživatelů, tipů, oblíbených, tipy dle kategorií)</li>
+    <li>Spravuje uživatele – zobrazí seznam, změní roli (user ↔ admin), smaže uživatele</li>
+    <li>Smaže jakýkoli tip v systému</li>
+  </ul>
+
+  <h3>Hlavní scénáře</h3>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Název scénáře</th>
+      <th>Aktér</th>
+      <th>Popis</th>
+    </tr>
+    <tr>
+      <td>UC-01</td>
+      <td>Přihlášení přes Google</td>
+      <td>Návštěvník</td>
+      <td>Uživatel klikne na „Sign in with Google", je přesměrován na Google OAuth, po autorizaci je vytvořena session.</td>
+    </tr>
+    <tr>
+      <td>UC-02</td>
+      <td>Přihlášení přes e-mail OTP</td>
+      <td>Návštěvník</td>
+      <td>Uživatel zadá e-mail, dostane OTP kód, zadá kód do formuláře, je vytvořena session.</td>
+    </tr>
+    <tr>
+      <td>UC-03</td>
+      <td>Vyhledávání tipů</td>
+      <td>Kdokoli</td>
+      <td>Uživatel zadá hledaný výraz, aplikace vrátí tipy odpovídající v titulku nebo popisu s podporou filtrů a stránkování.</td>
+    </tr>
+    <tr>
+      <td>UC-04</td>
+      <td>Přidání do oblíbených</td>
+      <td>Přihlášený uživatel</td>
+      <td>Uživatel klikne na ikonu hvězdičky na tipu, tip se přidá/odebere z oblíbených.</td>
+    </tr>
+    <tr>
+      <td>UC-05</td>
+      <td>Vytvoření vlastního tipu</td>
+      <td>Přihlášený uživatel</td>
+      <td>Uživatel vyplní formulář (titulek, popis, kategorie), tip je uložen do databáze a zobrazen v sekci „Moje tipy".</td>
+    </tr>
+    <tr>
+      <td>UC-06</td>
+      <td>Správa uživatelů</td>
+      <td>Administrátor</td>
+      <td>Admin zobrazí seznam uživatelů, může změnit roli nebo smazat uživatele.</td>
+    </tr>
+  </table>
+</div>
+
+<!-- 5. POUŽITÉ TECHNOLOGIE -->
+<div class="page-break">
+  <h2>5. Použité technologie</h2>
+
+  <h3>Frontend</h3>
+  <table>
+    <tr><th>Technologie</th><th>Verze</th><th>Účel</th></tr>
+    <tr><td>Next.js</td><td>15.x</td><td>React framework s App Routerem, SSR, API Routes</td></tr>
+    <tr><td>React</td><td>18.x</td><td>UI knihovna, Server &amp; Client Components</td></tr>
+    <tr><td>TypeScript</td><td>5.6</td><td>Statická typová kontrola</td></tr>
+    <tr><td>Tailwind CSS</td><td>3.x</td><td>Utility-first CSS framework</td></tr>
+    <tr><td>shadcn/ui</td><td>latest</td><td>Komponenty postavené na Radix UI</td></tr>
+    <tr><td>Lucide React</td><td>latest</td><td>Sada ikon</td></tr>
+  </table>
+
+  <h3>Backend</h3>
+  <table>
+    <tr><th>Technologie</th><th>Verze</th><th>Účel</th></tr>
+    <tr><td>Next.js API Routes</td><td>15.x</td><td>Serverless API endpointy</td></tr>
+    <tr><td>NextAuth.js</td><td>4.24</td><td>Autentizace (OAuth, session management)</td></tr>
+    <tr><td>Prisma ORM</td><td>6.19</td><td>Databázový ORM pro PostgreSQL</td></tr>
+    <tr><td>Nodemailer</td><td>latest</td><td>Odesílání OTP kódů e-mailem</td></tr>
+  </table>
+
+  <h3>Databáze a infrastruktura</h3>
+  <table>
+    <tr><th>Technologie</th><th>Účel</th></tr>
+    <tr><td>PostgreSQL</td><td>Relační databáze</td></tr>
+    <tr><td>Vercel Postgres</td><td>Cloudový hosting databáze</td></tr>
+    <tr><td>Vercel Platform</td><td>Hosting aplikace (serverless, CDN)</td></tr>
+    <tr><td>GitHub</td><td>Verzování kódu, CI/CD trigger</td></tr>
+  </table>
+
+  <h3>Vývojové nástroje</h3>
+  <table>
+    <tr><th>Nástroj</th><th>Účel</th></tr>
+    <tr><td>Yarn 4.10.3</td><td>Správa závislostí</td></tr>
+    <tr><td>ESLint</td><td>Statická analýza kódu</td></tr>
+    <tr><td>Prisma Studio</td><td>GUI pro správu databáze</td></tr>
+    <tr><td>VS Code</td><td>Vývojové prostředí</td></tr>
+  </table>
+</div>
+
+<!-- 5.5 FRAMEWORKY (podkapitola Použitých technologií) -->
+<div class="page-break">
+  <h2>5.1 Frameworky</h2>
+
+  <h3>Next.js 15 (App Router)</h3>
+  <p>Next.js je hlavní framework aplikace [1]. Využívá tzv. App Router, který umožňuje definovat stránky jako React Server Components a minimalizuje tak množství JavaScriptu odesílaného do prohlížeče [1]. Každá stránka je serverově renderována, což zajišťuje rychlé první načtení a dobrou SEO optimalizaci. API Routes fungují jako serverless funkce na platformě Vercel [7].</p>
+
+  <h3>NextAuth.js</h3>
+  <p>NextAuth.js zajišťuje veškerou logiku autentizace [2]. Podporuje Google OAuth provider pro přihlášení přes Google účet a vlastní e-mailový flow pro OTP autentizaci. Session management je řešen pomocí databázových sessions uložených v PostgreSQL (modely <code>Session</code> a <code>Account</code>). NextAuth.js také automaticky řeší CSRF ochranu a bezpečné cookies [2].</p>
+
+  <h3>Prisma ORM</h3>
+  <p>Prisma slouží jako vrstva mezi aplikací a PostgreSQL databází [3]. Schéma databáze je definováno v souboru <code>prisma/schema.prisma</code>. Prisma generuje typově bezpečný klient pro TypeScript, čímž eliminuje SQL injection útoky a zajišťuje konzistenci dat [3]. Pro seedování testovacích dat slouží skript <code>prisma/seed.ts</code>.</p>
+
+  <h3>shadcn/ui + Radix UI</h3>
+  <p>shadcn/ui je kolekce přístupných a stylizovatelných UI komponent postavených na primitivách knihovny Radix UI [5, 6]. Komponenty jsou kopírovány přímo do projektu (nejsou závislostí npm balíčku), což umožňuje jejich plnou customizaci pomocí Tailwind CSS. V projektu jsou využívány komponenty Button, Card, Avatar, Dialog a DropdownMenu.</p>
+
+  <h3>Tailwind CSS</h3>
+  <p>Tailwind CSS je utility-first CSS framework, který umožňuje stylizovat komponenty přímo v JSX bez nutnosti psát separátní CSS soubory [4]. Díky JIT compileru jsou do výsledného bundle zahrnuty pouze skutečně použité styly, což minimalizuje velikost CSS souboru v produkci [4].</p>
+</div>
+
+<!-- 5.6 BEZPEČNOST (podkapitola Použitých technologií) -->
+<div class="page-break">
+  <h2>5.2 Bezpečnost</h2>
+
+  <h3>Autentizace a autorizace</h3>
+  <ul>
+    <li><strong>NextAuth.js session management</strong> – sessions jsou uloženy v databázi s expirací, nikoli pouze v cookies [2]</li>
+    <li><strong>Google OAuth 2.0</strong> – přihlašování přes důvěryhodného poskytovatele identity, hesla nejsou uložena v aplikaci [13]</li>
+    <li><strong>Email OTP</strong> – jednorázové kódy s časovou platností odeslané na e-mail uživatele přes Nodemailer [8]</li>
+    <li><strong>CSRF ochrana</strong> – NextAuth.js automaticky generuje a ověřuje CSRF tokeny [2]</li>
+    <li><strong>Secure &amp; HttpOnly cookies</strong> – session cookies jsou chráněny před čtením z JavaScriptu [12]</li>
+    <li><strong>Role-based access control (RBAC)</strong> – administrátorské endpointy ověřují roli <code>admin</code> v databázi při každém požadavku [12]</li>
+  </ul>
+
+  <h3>Databáze</h3>
+  <ul>
+    <li><strong>Prisma ORM</strong> – všechny dotazy jsou parametrizované, SQL injection je znemožněn na úrovni ORM [3, 12]</li>
+    <li><strong>SSL šifrované připojení</strong> – komunikace s PostgreSQL probíhá přes SSL/TLS [7]</li>
+    <li><strong>Validace vstupů</strong> – délka titulku (1–100 znaků), délka popisu (1–500 znaků) a platná kategorie jsou ověřovány na serveru před uložením do databáze [12]</li>
+    <li><strong>Kaskádové mazání</strong> – při smazání uživatele se automaticky odstraní jeho sessions a oblíbené tipy [3]</li>
+  </ul>
+
+  <h3>API ochrana</h3>
+  <ul>
+    <li>Každý chráněný endpoint ověřuje platnou session pomocí <code>getServerSession()</code> [2]</li>
+    <li>Vlastnictví tipu je ověřeno před smazáním – pouze autor nebo admin může smazat tip</li>
+    <li>Admin nemůže smazat vlastní účet ani odebrat sobě roli admina (ochrana před lockoutem)</li>
+  </ul>
+
+  <h3>Prostředí a nasazení</h3>
+  <ul>
+    <li>Citlivé hodnoty (API klíče, databázové heslo, NEXTAUTH_SECRET) jsou uloženy jako environment variables na Vercelu, nikoli v kódu [7]</li>
+    <li>Soubor <code>.env</code> je zahrnut v <code>.gitignore</code></li>
+    <li>Vercel poskytuje automatický HTTPS/SSL certifikát, DDoS ochranu a edge network security [7]</li>
+  </ul>
+</div>
+
+<!-- 5.3 ZDROJE (podkapitola Použitých technologií) -->
+<div class="page-break">
+  <h2>5.3 Zdroje (výpočetní a cloudové prostředky)</h2>
+  <p>Projekt využívá výhradně cloudové a bezplatné prostředky dostupné v rámci studentských a free-tier plánů.</p>
+
+  <h3>Výpočetní výkon – Vercel Serverless Functions</h3>
+  <p>Veškerý backend (API Routes) běží na platformě Vercel jako serverless funkce [7]. Každý HTTP požadavek spustí izolovanou serverless instanci s přidělenou pamětí 1024 MB a maximální dobou běhu 10 s (Hobby plán). Vercel automaticky škáluje počet instancí podle zatížení, takže aplikace nevyžaduje správu serverů.</p>
+  <table>
+    <tr><th>Prostředek</th><th>Parametr</th><th>Hodnota (Hobby plán)</th></tr>
+    <tr><td>Serverless Functions</td><td>Paměť</td><td>1024 MB</td></tr>
+    <tr><td>Serverless Functions</td><td>Max. doba běhu</td><td>10 s</td></tr>
+    <tr><td>Serverless Functions</td><td>Počet invokací/měsíc</td><td>100 000 (free tier)</td></tr>
+    <tr><td>Edge Network (CDN)</td><td>Přenesená data</td><td>100 GB/měsíc (free tier)</td></tr>
+    <tr><td>Bandwidth</td><td>Přenesená data</td><td>100 GB/měsíc (free tier)</td></tr>
+  </table>
+
+  <h3>Databáze – Vercel Postgres</h3>
+  <p>Databáze PostgreSQL je hostována na Vercel Postgres (powered by Neon), která je dostupná v rámci free tier plánu [7]. Připojení probíhá přes connection pooling, čímž se minimalizuje latence při navazování nových spojení z jednotlivých serverless instancí.</p>
+  <table>
+    <tr><th>Prostředek</th><th>Parametr</th><th>Hodnota (free tier)</th></tr>
+    <tr><td>Vercel Postgres</td><td>Úložiště</td><td>256 MB</td></tr>
+    <tr><td>Vercel Postgres</td><td>Počet řádků</td><td>10 000 (free tier)</td></tr>
+    <tr><td>Vercel Postgres</td><td>Connection pooling</td><td>Ano (Neon pooler)</td></tr>
+    <tr><td>Vercel Postgres</td><td>SSL</td><td>Povinné</td></tr>
+  </table>
+
+  <h3>E-mailová infrastruktura – SMTP</h3>
+  <p>Pro odesílání OTP kódů je využit SMTP server prostřednictvím knihovny Nodemailer [8]. V produkčním prostředí je nakonfigurován externím poskytovatelem (např. Gmail SMTP nebo Resend). Odesílání e-mailů probíhá synchronně v rámci serverless funkce.</p>
+
+  <h3>Verzování a CI/CD – GitHub + Vercel</h3>
+  <p>Zdrojový kód je verzován v repozitáři na platformě GitHub. Vercel je napojený na repozitář a při každém push do větve <code>main</code> automaticky spustí build a nasadí novou verzi aplikace do produkce. Build probíhá na infrastruktuře Vercel bez nutnosti vlastního CI serveru.</p>
+
+  <h3>Vývojové prostředí</h3>
+  <p>Lokální vývoj probíhá na osobních počítačích členů týmu s využitím Node.js 18+ a správce závislostí Yarn 4.10.3. Jako vývojové prostředí byl použit VS Code. Databáze byla při vývoji přístupná přes Prisma Studio (GUI klient generovaný Prismou).</p>
+</div>
+
+<!-- 6. PŘÍKLADY IMPLEMENTACE -->
+<div class="page-break">
+  <h2>6. Příklady implementace</h2>
+
+  <h3>6.1 API endpoint – vyhledávání tipů (GET /api/tips)</h3>
+  <p>Endpoint přijímá query parametry pro full-text vyhledávání, filtrování kategorií a stránkování. Sestavuje Prisma dotaz dynamicky podle zadaných filtrů.</p>
+  <pre>// app/api/tips/route.ts
+export async function GET(req: Request) {
+  const session = await getServerSession(authOptions);
+  const { searchParams } = new URL(req.url);
+
+  // Načtení parametrů z URL
+  const search = searchParams.get("search") || "";
+  const categories = searchParams.get("categories")?.split(",").filter(Boolean) || [];
+  const searchIn = searchParams.get("searchIn") || "both"; // "title" | "description" | "both"
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "9");
+
+  // Dynamické sestavení WHERE podmínky
+  const whereConditions: any[] = [];
+
+  // Filtr kategorií
+  if (categories.length > 0) {
+    whereConditions.push({ category: { in: categories } });
+  }
+
+  // Full-text vyhledávání
+  if (search.trim()) {
+    const searchConditions: any[] = [];
+    if (searchIn === "title" || searchIn === "both") {
+      searchConditions.push({ title: { contains: search } });
+    }
+    if (searchIn === "description" || searchIn === "both") {
+      searchConditions.push({ description: { contains: search } });
+    }
+    if (searchConditions.length > 0) {
+      whereConditions.push({ OR: searchConditions });
+    }
+  }
+
+  const where = whereConditions.length > 0 ? { AND: whereConditions } : undefined;
+
+  // Dotaz do databáze s stránkováním
+  const total = await prisma.tip.count({ where });
+  const tips = await prisma.tip.findMany({
+    where,
+    orderBy: { createdAt: "desc" },
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+
+  return NextResponse.json({ tips, total, page, totalPages: Math.ceil(total / limit) });
+}</pre>
+
+  <h3>6.2 API endpoint – toggle oblíbených (POST /api/favorites)</h3>
+  <p>Endpoint funguje jako toggle – pokud tip již je oblíbený, odebere ho; pokud není, přidá ho. Využívá Prisma <code>@@unique</code> constraint pro detekci duplicit.</p>
+  <pre>// app/api/favorites/route.ts
+export async function POST(req: Request) {
+  const session = await getServerSession(authOptions);
+
+  // Ověření přihlášení
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { tipId } = await req.json();
+
+  // Zjistíme, zda tip již je v oblíbených
+  const existing = await prisma.favorite.findUnique({
+    where: { userId_tipId: { userId: session.user.id, tipId } },
+  });
+
+  if (existing) {
+    // Tip je oblíbený → odebereme ho
+    await prisma.favorite.delete({ where: { id: existing.id } });
+    return NextResponse.json({ favorited: false });
+  } else {
+    // Tip není oblíbený → přidáme ho
+    await prisma.favorite.create({
+      data: { userId: session.user.id, tipId },
+    });
+    return NextResponse.json({ favorited: true });
+  }
+}</pre>
+
+  <h3>6.3 Email OTP autentizace (POST /api/auth/send-otp)</h3>
+  <p>Endpoint vygeneruje náhodný šestimístný OTP kód, uloží ho do databáze a odešle uživateli e-mailem přes Nodemailer.</p>
+  <pre>// app/api/auth/send-otp/route.ts (zjednodušeno)
+export async function POST(req: Request) {
+  const { email } = await req.json();
+
+  // Generování OTP kódu
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  const expires = new Date(Date.now() + 10 * 60 * 1000); // platnost 10 minut
+
+  // Uložení OTP tokenu do databáze
+  await prisma.verificationToken.upsert({
+    where: { identifier_token: { identifier: email, token: otp } },
+    create: { identifier: email, token: otp, expires },
+    update: { token: otp, expires },
+  });
+
+  // Odeslání e-mailu přes Nodemailer
+  await transporter.sendMail({
+    from: process.env.EMAIL_FROM,
+    to: email,
+    subject: "Váš přihlašovací kód",
+    html: `&lt;p&gt;Váš jednorázový kód je: &lt;strong&gt;${otp}&lt;/strong&gt;&lt;/p&gt;
+           &lt;p&gt;Kód platí 10 minut.&lt;/p&gt;`,
+  });
+
+  return NextResponse.json({ success: true });
+}</pre>
+</div>
+
+<!-- 7. TESTOVÁNÍ -->
+<div class="page-break">
+  <h2>7. Testování (uživatelské)</h2>
+  <p>V rámci projektu bylo provedeno manuální uživatelské testování. Automatizované testy (unit, integration) nebyly implementovány z časových důvodů, avšak byly provedeny systematické scénáře pro ověření funkčnosti.</p>
+
+  <h3>Testovací scénáře</h3>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Scénář</th>
+      <th>Postup</th>
+      <th>Očekávaný výsledek</th>
+      <th>Výsledek</th>
+    </tr>
+    <tr>
+      <td>T-01</td>
+      <td>Přihlášení Google OAuth</td>
+      <td>Klik na "Sign in with Google" → autorizace Google → redirect zpět</td>
+      <td>Uživatel je přihlášen, session vytvořena</td>
+      <td>✅ OK</td>
+    </tr>
+    <tr>
+      <td>T-02</td>
+      <td>Přihlášení OTP</td>
+      <td>Zadání e-mailu → obdržení kódu → zadání kódu</td>
+      <td>Uživatel je přihlášen</td>
+      <td>✅ OK</td>
+    </tr>
+    <tr>
+      <td>T-03</td>
+      <td>Vyhledávání tipů</td>
+      <td>Zadání klíčového slova do searchbaru</td>
+      <td>Zobrazí se relevantní tipy</td>
+      <td>✅ OK</td>
+    </tr>
+    <tr>
+      <td>T-04</td>
+      <td>Filtrování kategorií</td>
+      <td>Výběr kategorií Sleep + Nutrition</td>
+      <td>Zobrazí se pouze tipy z vybraných kategorií</td>
+      <td>✅ OK</td>
+    </tr>
+    <tr>
+      <td>T-05</td>
+      <td>Přidání do oblíbených</td>
+      <td>Klik na ikonu hvězdičky na tipu</td>
+      <td>Tip přidán, ikona se změní na plnou</td>
+      <td>✅ OK</td>
+    </tr>
+    <tr>
+      <td>T-06</td>
+      <td>Vytvoření vlastního tipu</td>
+      <td>Vyplnění formuláře a odeslání</td>
+      <td>Tip uložen a zobrazen v sekci „Moje tipy"</td>
+      <td>✅ OK</td>
+    </tr>
+    <tr>
+      <td>T-07</td>
+      <td>Smazání vlastního tipu</td>
+      <td>Klik na tlačítko smazat u vlastního tipu</td>
+      <td>Tip odstraněn z databáze</td>
+      <td>✅ OK</td>
+    </tr>
+    <tr>
+      <td>T-08</td>
+      <td>Přístup na admin panel bez role</td>
+      <td>Přímý přístup na /admin bez admin role</td>
+      <td>Uživatel je přesměrován / zobrazena chyba 403</td>
+      <td>✅ OK</td>
+    </tr>
+    <tr>
+      <td>T-09</td>
+      <td>Responsivita na mobilním zařízení</td>
+      <td>Otevření aplikace na mobilním prohlížeči (375px)</td>
+      <td>Layout se přizpůsobí, navigace funguje</td>
+      <td>✅ OK</td>
+    </tr>
+    <tr>
+      <td>T-10</td>
+      <td>Stránkování tipů</td>
+      <td>Procházení stránek výsledků (9 tipů/stránka)</td>
+      <td>Správně načtená každá stránka</td>
+      <td>✅ OK</td>
+    </tr>
+  </table>
+
+  <h3>Testovací prostředí</h3>
+  <ul>
+    <li>Prohlížeče: Chrome 124, Firefox 126, Safari 17 (macOS)</li>
+    <li>Mobilní zařízení: iPhone 14 (Safari), Android (Chrome)</li>
+    <li>Testování probíhalo na produkční verzi aplikace (Vercel)</li>
+  </ul>
+</div>
+
+<!-- 8. MONITORING -->
+<div class="page-break">
+  <h2>8. Monitoring</h2>
+  <p>Monitoring aplikace je zajištěn prostředky platformy Vercel a integrovaným logováním v Next.js.</p>
+
+  <h3>Vercel Analytics &amp; Monitoring</h3>
+  <ul>
+    <li><strong>Deployment logy</strong> – Vercel automaticky zaznamenává logy každého buildu a deployu, včetně chyb při buildování</li>
+    <li><strong>Runtime logy</strong> – výstupy <code>console.log</code> a <code>console.error</code> z API Routes jsou dostupné v Vercel dashboardu v reálném čase</li>
+    <li><strong>Uptime monitoring</strong> – Vercel sleduje dostupnost aplikace a informuje o výpadcích</li>
+    <li><strong>Edge Network metriky</strong> – Vercel poskytuje přehled o počtu požadavků, latenci a geografickém rozložení návštěvníků</li>
+  </ul>
+
+  <h3>Aplikační logování</h3>
+  <p>V každém API endpointu jsou zachyceny chyby pomocí <code>try/catch</code> bloků a zaznamenány do logu:</p>
+  <pre>} catch (error) {
+  console.error("Tips API error:", error);
+  return NextResponse.json(
+    { error: "Internal server error" },
+    { status: 500 }
+  );
+}</pre>
+
+  <h3>Admin statistiky</h3>
+  <p>Administrátorský endpoint <code>GET /api/admin/stats</code> poskytuje real-time přehled o stavu databáze:</p>
+  <ul>
+    <li>Celkový počet uživatelů a administrátorů</li>
+    <li>Celkový počet tipů a jejich rozložení dle kategorií</li>
+    <li>Celkový počet uložených oblíbených tipů</li>
+    <li>Přehled nejnovějších uživatelů a tipů</li>
+  </ul>
+  <p>Tyto statistiky jsou zobrazeny přehledně v administrátorském panelu aplikace.</p>
+</div>
+
+<!-- 9. TÝM -->
+<div class="page-break">
+  <h2>9. Tým, kompetence, strávená doba</h2>
+
+  <h3>Členové týmu</h3>
+  <table>
+    <tr>
+      <th>Jméno</th>
+      <th>Role</th>
+      <th>Kompetence</th>
+      <th>Strávená doba</th>
+    </tr>
+    <tr>
+      <td>Ondřej Herian</td>
+      <td>Lead developer, architektura</td>
+      <td>Next.js, TypeScript, Prisma, API design, deployment</td>
+      <td>~35 hodin</td>
+    </tr>
+    <tr>
+      <td>Petr Herian</td>
+      <td>Frontend developer</td>
+      <td>React, Tailwind CSS, shadcn/ui, responzivní design</td>
+      <td>~25 hodin</td>
+    </tr>
+    <tr>
+      <td>Vojtěch Veber</td>
+      <td>Backend developer, testování</td>
+      <td>NextAuth.js, Nodemailer, databázové schéma, testování</td>
+      <td>~20 hodin</td>
+    </tr>
+  </table>
+
+  <h3>Rozdělení práce</h3>
+  <table>
+    <tr>
+      <th>Oblast</th>
+      <th>Zodpovědný člen</th>
+    </tr>
+    <tr><td>Architektura projektu a nastavení Next.js</td><td>Ondřej Herian</td></tr>
+    <tr><td>Databázové schéma a Prisma modely</td><td>Ondřej Herian</td></tr>
+    <tr><td>API endpointy (tips, favorites, admin)</td><td>Ondřej Herian</td></tr>
+    <tr><td>Autentizace (NextAuth, Google OAuth)</td><td>Vojtěch Veber</td></tr>
+    <tr><td>Email OTP (Nodemailer)</td><td>Vojtěch Veber</td></tr>
+    <tr><td>UI komponenty a stránky (Homepage, Category, Favorites)</td><td>Petr Herian</td></tr>
+    <tr><td>Admin panel</td><td>Petr Herian</td></tr>
+    <tr><td>Responzivní design a Tailwind stylizace</td><td>Petr Herian</td></tr>
+    <tr><td>Nasazení na Vercel</td><td>Ondřej Herian</td></tr>
+    <tr><td>Manuální testování</td><td>Vojtěch Veber</td></tr>
+    <tr><td>Dokumentace</td><td>Všichni členové</td></tr>
+  </table>
+
+  <h3>Celková strávená doba</h3>
+  <p>Celkový odhadovaný čas strávený na projektu: <strong>~80 hodin</strong> (celý tým dohromady).</p>
+  <p>Projekt byl vyvíjen přibližně 6 týdnů s průměrnou intenzitou 13 hodin týdně.</p>
+</div>
+
+<!-- SEZNAM LITERATURY přesunut na konec -->
+
+<!-- 10. ZÁVĚR -->
+<div class="page-break">
+  <h2>10. Závěr</h2>
+
+  <h3>Úspěšnost splnění cílů</h3>
+  <p>Projekt <strong>Healthy Lifestyle Tips</strong> byl úspěšně dokončen a splňuje všechny zadané požadavky. Aplikace je plně funkční, nasazená v produkci na platformě Vercel a dostupná na adrese <a href="https://healthy-lifestyle-tips.vercel.app/">https://healthy-lifestyle-tips.vercel.app/</a>.</p>
+
+  <table>
+    <tr><th>Cíl</th><th>Splněno</th></tr>
+    <tr><td>Full-stack webová aplikace s Next.js 15</td><td>✅ Ano</td></tr>
+    <tr><td>Autentizace (Google OAuth + Email OTP)</td><td>✅ Ano</td></tr>
+    <tr><td>Propojení s PostgreSQL přes Prisma ORM</td><td>✅ Ano</td></tr>
+    <tr><td>RESTful API s 11+ endpointy</td><td>✅ Ano</td></tr>
+    <tr><td>Full-text vyhledávání s filtry a stránkováním</td><td>✅ Ano</td></tr>
+    <tr><td>Admin panel pro správu uživatelů</td><td>✅ Ano</td></tr>
+    <tr><td>Responzivní design</td><td>✅ Ano</td></tr>
+    <tr><td>Nasazení na Vercel s CI/CD</td><td>✅ Ano</td></tr>
+  </table>
+
+  <h3>Co se naučil tým</h3>
+  <p>Projekt přinesl cenné praktické zkušenosti s vývojem moderní full-stack aplikace. Tým se seznámil s Next.js App Routerem, pochopil rozdíl mezi Server a Client Components, naučil se pracovat s Prisma ORM a implementovat bezpečnou autentizaci pomocí NextAuth.js.</p>
+
+  <h3>Další příležitosti a možná rozšíření</h3>
+  <ul>
+    <li><strong>Komentáře k tipům</strong> – možnost diskuze pod každým tipem</li>
+    <li><strong>Hodnocení tipů</strong> – like/dislike systém nebo hvězdičkové hodnocení</li>
+    <li><strong>Notifikace</strong> – e-mailové upozornění na nové tipy v oblíbených kategoriích</li>
+    <li><strong>Automatizované testy</strong> – implementace unit a integration testů (Jest, Playwright)</li>
+    <li><strong>Pokročilé vyhledávání</strong> – full-text search přímo v PostgreSQL pomocí <code>pg_trgm</code></li>
+    <li><strong>Vícejazyčnost</strong> – lokalizace aplikace do angličtiny a dalších jazyků pomocí next-intl</li>
+    <li><strong>PWA</strong> – přeměna aplikace na Progressive Web App pro offline podporu</li>
+  </ul>
+</div>
+
+<!-- 11. SEZNAM LITERATURY -->
+<div class="page-break">
+  <h2>11. Seznam literatury</h2>
+  <ol>
+    <li>Vercel Inc. <em>Next.js Documentation – App Router.</em> [online]. Dostupné z: https://nextjs.org/docs [cit. 2025-04-16]</li>
+    <li>NextAuth.js contributors. <em>NextAuth.js Documentation.</em> [online]. Dostupné z: https://next-auth.js.org/ [cit. 2025-04-16]</li>
+    <li>Prisma Data Inc. <em>Prisma ORM Documentation.</em> [online]. Dostupné z: https://www.prisma.io/docs [cit. 2025-04-16]</li>
+    <li>Tailwind Labs. <em>Tailwind CSS Documentation.</em> [online]. Dostupné z: https://tailwindcss.com/docs [cit. 2025-04-16]</li>
+    <li>shadcn. <em>shadcn/ui – Re-usable components built with Radix UI and Tailwind CSS.</em> [online]. Dostupné z: https://ui.shadcn.com/ [cit. 2025-04-16]</li>
+    <li>WorkOS. <em>Radix UI – Unstyled, accessible components for React.</em> [online]. Dostupné z: https://www.radix-ui.com/ [cit. 2025-04-16]</li>
+    <li>Vercel Inc. <em>Vercel Documentation – Deployment &amp; Infrastructure.</em> [online]. Dostupné z: https://vercel.com/docs [cit. 2025-04-16]</li>
+    <li>Nodemailer contributors. <em>Nodemailer – Send email from Node.js.</em> [online]. Dostupné z: https://nodemailer.com/ [cit. 2025-04-16]</li>
+    <li>Microsoft. <em>TypeScript Documentation.</em> [online]. Dostupné z: https://www.typescriptlang.org/docs/ [cit. 2025-04-16]</li>
+    <li>Meta Platforms. <em>React Documentation.</em> [online]. Dostupné z: https://react.dev/ [cit. 2025-04-16]</li>
+    <li>Lucide contributors. <em>Lucide – Beautiful &amp; consistent icon toolkit.</em> [online]. Dostupné z: https://lucide.dev/ [cit. 2025-04-16]</li>
+    <li>OWASP Foundation. <em>OWASP Top Ten – The Ten Most Critical Web Application Security Risks.</em> [online]. Dostupné z: https://owasp.org/www-project-top-ten/ [cit. 2025-04-16]</li>
+    <li>Google. <em>Google Identity – OAuth 2.0 for Web Server Applications.</em> [online]. Dostupné z: https://developers.google.com/identity/protocols/oauth2/web-server [cit. 2025-04-16]</li>
+  </ol>
+</div>
+
+</body>
+</html>
