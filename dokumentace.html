@@ -613,9 +613,9 @@ export async function POST(req: Request) {
 <!-- 7. TESTOVÁNÍ -->
 <div class="page-break">
   <h2>7. Testování (uživatelské)</h2>
-  <p>V rámci projektu bylo provedeno manuální uživatelské testování. Automatizované testy (unit, integration) nebyly implementovány z časových důvodů, avšak byly provedeny systematické scénáře pro ověření funkčnosti.</p>
+  <p>V rámci projektu bylo provedeno uživatelské testování zahrnující manuální funkční scénáře, A/B testování prototypů a 5 Second Test zaměřený na použitelnost a přístupnost. Automatizované testy (unit, integration) nebyly implementovány z časových důvodů.</p>
 
-  <h3>Testovací scénáře</h3>
+  <h3>7.1 Funkční testovací scénáře</h3>
   <table>
     <tr>
       <th>ID</th>
@@ -704,6 +704,79 @@ export async function POST(req: Request) {
   </ul>
 </div>
 
+<!-- 7.2 A/B TESTOVÁNÍ -->
+<div class="page-break">
+  <h3>7.2 A/B Testování</h3>
+  <p>Bylo provedeno A/B testování dvou variant prototypu zaměřené na navigaci a vizuální přehlednost aplikace. Účastníci byli požádáni, aby během celého testu nahlas komentovali své kroky (<em>think-aloud</em> metoda).</p>
+
+  <h4 style="font-size:12pt; font-weight:bold; margin-top:14px;">Testovací scénář</h4>
+  <ol>
+    <li>Zobrazte si domovskou stránku webu. Na úvodní stránce najděte kategorii Spánek.</li>
+    <li>Otevřete kategorii Spánek a najděte tip s názvem „Večerní digitální detox".</li>
+    <li>Rozklikněte tento tip a přidejte si jej mezi oblíbené.</li>
+    <li>Přejděte do sekce Oblíbené a ověřte, že je tip uložen.</li>
+    <li><em>(volitelný)</em> Přejděte na kartu nedávných tipů a přidejte si některý mezi oblíbené.</li>
+  </ol>
+
+  <h4 style="font-size:12pt; font-weight:bold; margin-top:14px;">Výsledky</h4>
+  <table>
+    <tr>
+      <th>Aspekt</th>
+      <th>Varianta A</th>
+      <th>Varianta B</th>
+    </tr>
+    <tr>
+      <td>Navigace do sekce Favorites</td>
+      <td>2 ze 4 účastníků váhali — sekce pouze jako textový odkaz v menu</td>
+      <td>Všichni našli bez potíží — sekce doplněna o ikonku srdce</td>
+    </tr>
+    <tr>
+      <td>Celkový dojem</td>
+      <td>Přehledná, ale vizuálně méně výrazná</td>
+      <td>Vizuálně atraktivnější a intuitivnější, avšak „větší"</td>
+    </tr>
+    <tr>
+      <td>Karty kategorií</td>
+      <td>Standardní velikost</td>
+      <td>Zvýrazněné karty s větší velikostí písma</td>
+    </tr>
+  </table>
+  <p>Jeden účastník zmínil, že by uvítal více barevného odlišení kategorií, protože současné barevné schéma působilo příliš jednotně.</p>
+</div>
+
+<!-- 7.3 5 SECOND TEST -->
+<div class="page-break">
+  <h3>7.3 Použitelnost a přístupnost – 5 Second Test</h3>
+  <p>Pětivteřinový test spočívá v tom, že účastníkovi je na 5 vteřin ukázán snímek domovské stránky. Poté má zodpovědět otázky týkající se účelu webu, vizuálních prvků a prvního dojmu. Test byl proveden na 4 osobách.</p>
+
+  <h4 style="font-size:12pt; font-weight:bold; margin-top:14px;">Otázky</h4>
+  <ol>
+    <li>Jaký je účel promítnuté webové stránky? K čemu tento web slouží?</li>
+    <li>Co vás na stránce zaujalo jako první?</li>
+    <li>Jakým dojmem na vás stránka působí (přehlednost, vizuální styl, důvěryhodnost)?</li>
+  </ol>
+
+  <h4 style="font-size:12pt; font-weight:bold; margin-top:14px;">Výsledky</h4>
+  <table>
+    <tr>
+      <th>Otázka</th>
+      <th>Výsledek</th>
+    </tr>
+    <tr>
+      <td>1. Účel stránky</td>
+      <td><strong>3 ze 4</strong> bez zaváhání určili účel jako „stránku s tipy pro zdravý životní styl" — karty kategorií (Sleep / Nutrition / Movement / Stress) byly dostatečně výrazné.</td>
+    </tr>
+    <tr>
+      <td>2. Co zaujalo jako první</td>
+      <td><strong>Všechny účastníky</strong> upoutala sekce Browse by Category s velkými kartami a ikonami. Jeden zmínil nadpis „Welcome to Healthy Lifestyle Tips" jako přátelský a jasný.</td>
+    </tr>
+    <tr>
+      <td>3. Celkový dojem</td>
+      <td>Stránka hodnocena jako <strong>moderní, čistá a přehledná</strong>. Jeden účastník by uvítal více barevného kontrastu mezi kartami kategorií.</td>
+    </tr>
+  </table>
+</div>
+
 <!-- 8. MONITORING -->
 <div class="page-break">
   <h2>8. Monitoring</h2>
@@ -736,6 +809,10 @@ export async function POST(req: Request) {
     <li>Přehled nejnovějších uživatelů a tipů</li>
   </ul>
   <p>Tyto statistiky jsou zobrazeny přehledně v administrátorském panelu aplikace.</p>
+
+  <h3>Google PageSpeed Insights</h3>
+  <p>Výkon aplikace byl změřen nástrojem Google PageSpeed Insights, který hodnotí čtyři oblasti: Performance, Accessibility, Best Practices a SEO. Testování proběhlo na produkční verzi aplikace nasazené na Vercelu.</p>
+  <p>Výsledky potvrzují, že aplikace dosahuje vysokých hodnot ve všech sledovaných oblastech, což je z velké části zásluhou Next.js 15 (Server Components, automatické code splitting), Vercel Edge Network (CDN) a optimalizace obrázků přes komponentu <code>next/image</code>.</p>
 </div>
 
 <!-- 9. TÝM -->
